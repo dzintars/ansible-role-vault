@@ -1,0 +1,5 @@
+---
+# defaults file for vault
+
+root_domain: oswee.com
+ip_addr: 192.168.1.2
