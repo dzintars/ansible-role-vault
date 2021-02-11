@@ -3,43 +3,37 @@
 
 # TODO: 1: Disable mlock
 
-- name: install rpm keys
-  become: yes
+- name: Install rpm keys
   rpm_key:
     state: present
     key: "{{ item }}"
   loop:
     - https://rpm.releases.hashicorp.com/gpg
 
-- name: Install HashiCorp repo
-  become: yes
+- name: Install HashiCorp repository
   get_url:
     url: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
     dest: /etc/yum.repos.d/hashicorp.repo
 
-- name: install packages
-  become: yes
+- name: Install packages
   dnf:
     name: "{{ item }}"
     state: latest
   loop: "{{ packages }}"
 
-- name: Copy Vault systemd service
-  become: yes
+- name: Copy Vault systemd sevice unit
   copy:
     src: vault.service
     dest: /etc/systemd/system/vault.service
     mode: '0644'
 
 - name: Create Vault system group
-  become: yes
   group:
     name: vault
     state: present
     system: yes
 
 - name: Create Vault user
-  become: yes
   user:
     name: vault
     home: /etc/vault.d
@@ -47,13 +41,11 @@
     shell: /bin/false
     group: vault
 
-- name: just force systemd to re-execute itself (2.8 and above)
-  become: yes
+- name: Force systemd to re-execute itself (2.8 and above)
   systemd:
     daemon_reexec: yes
 
 - name: Allow the service to be accessed at the firewall level
-  become: yes
   firewalld:
     port: 8200/tcp
     permanent: yes
@@ -61,7 +53,6 @@
   notify: Restart Firewalld
 
 - name: Allow the service to be accessed at the firewall level
-  become: yes
   firewalld:
     port: 8201/tcp
     permanent: yes

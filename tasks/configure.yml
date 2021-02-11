@@ -2,7 +2,6 @@
 # tasks file for vault
 
 - name: create vault directories
-  become: true
   file:
     path: "{{ item }}"
     state: directory
@@ -15,7 +14,6 @@
     - /opt/vault/tls
 
 - name: Copy Vault configuration file
-  become: true
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -27,7 +25,6 @@
     - { src: "vault.hcl.j2", dest: "/etc/vault.d/vault.hcl" }
 
 - name: copy TLS certificates
-  become: yes
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -39,7 +36,6 @@
     - { src: "/etc/letsencrypt/live/{{ root_domain }}/privkey.pem", dest: "/opt/vault/tls" }
 
 - name: Make sure a vault.service is enabled and running
-  become: yes
   systemd:
     name: vault
     enabled: yes
