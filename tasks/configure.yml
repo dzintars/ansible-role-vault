@@ -24,16 +24,16 @@
   loop:
     - { src: "vault.hcl.j2", dest: "/etc/vault.d/vault.hcl" }
 
-- name: copy TLS certificates
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: vault
-    group: vault
-    remote_src: yes
-  loop:
-    - { src: "/etc/letsencrypt/live/{{ root_domain }}/fullchain.pem", dest: "/opt/vault/tls" }
-    - { src: "/etc/letsencrypt/live/{{ root_domain }}/privkey.pem", dest: "/opt/vault/tls" }
+# - name: copy TLS certificates
+#   copy:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     owner: vault
+#     group: vault
+#     remote_src: yes
+#   loop:
+#     - { src: "/etc/letsencrypt/live/{{ root_domain }}/fullchain.pem", dest: "/opt/vault/tls" }
+#     - { src: "/etc/letsencrypt/live/{{ root_domain }}/privkey.pem", dest: "/opt/vault/tls" }
 
 - name: Make sure a vault.service is enabled and running
   systemd:

@@ -1,14 +1,12 @@
 ---
-# handlers file for roles/vault
+# handlers file for vault
 
 - name: Restart Firewalld
-  become: yes
   service:
     name: firewalld
     state: restarted
 
 - name: Restart Vault
-  become: yes
   service:
     name: vault
     state: restarted

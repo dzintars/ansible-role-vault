@@ -2,4 +2,6 @@
 # vars file for roles/vault
 
 packages:
-  - vault
+  redhat:
+    - firewalld
+    - vault

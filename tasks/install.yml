@@ -1,5 +1,5 @@
 ---
-# tasks file for roles/vault
+# tasks file for vault
 
 # TODO: 1: Disable mlock
 
@@ -19,7 +19,7 @@
   dnf:
     name: "{{ item }}"
     state: latest
-  loop: "{{ packages }}"
+  loop: "{{ packages.redhat }}"
 
 - name: Copy Vault systemd sevice unit
   copy:
@@ -47,17 +47,20 @@
 
 - name: Allow the service to be accessed at the firewall level
   firewalld:
-    port: 8200/tcp
+    port: "{{ item }}"
     permanent: yes
     state: enabled
   notify: Restart Firewalld
+  loop:
+    - 8200/tcp
+    - 8201/tcp
 
-- name: Allow the service to be accessed at the firewall level
-  firewalld:
-    port: 8201/tcp
-    permanent: yes
-    state: enabled
-  notify: Restart Firewalld
+# - name: Allow the service to be accessed at the firewall level
+#   firewalld:
+#     port: 8201/tcp
+#     permanent: yes
+#     state: enabled
+#   notify: Restart Firewalld
 
 # https://www.vaultproject.io/docs/configuration#parameters
 # Actually we don't need to do this because it's done in Systemd unit file.
