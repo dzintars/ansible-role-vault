@@ -29,7 +29,7 @@ BSD
 
 ## Author Information
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created in 2020 by [Dzintars Klavins](https://dzintars.github.io)
 
 [image-release]: https://img.shields.io/github/tag/dzintars/ansible-role-vault.svg
 [link-release]: https://github.com/dzintars/ansible-role-vault/releases
